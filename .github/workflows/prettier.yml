@@ -11,25 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
       - name: Install Prettier
         run: npm install --global prettier@latest
 
-      - name: Run Prettier Check
-        id: prettier-check
+      - name: Check Prettier Formatting
         run: |
-          OUTPUT=$(prettier --list-different \
+          prettier --check \
             --config ./.prettierrc \
             --ignore-path ./.prettierignore \
-            --no-error-on-unmatched-pattern '**/*.{js,jsx,ts,tsx,json}')
-
-          echo "$OUTPUT"
-          echo "PRETTIER_OUTPUT<<EOF" >> $GITHUB_ENV
-          echo "$OUTPUT" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-          if [ -n "$OUTPUT" ]; then
-            echo "❌ Prettier check failed. Please run prettier locally and commit the changes."
-            exit 1
-          fi
+            --no-error-on-unmatched-pattern \
+            '**/*.{js,jsx,ts,tsx,json}'
