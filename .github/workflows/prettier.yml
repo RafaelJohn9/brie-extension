@@ -19,17 +19,17 @@ jobs:
       - name: Run Prettier Check
         id: prettier-check
         run: |
-          OUTPUT=$(prettier --list-different --config ./.prettierrc --ignore-path ./.prettierignore --no-error-on-unmatched-pattern '*.{js,jsx,ts,tsx,json}')
+          OUTPUT=$(prettier --list-different \
+            --config ./.prettierrc \
+            --ignore-path ./.prettierignore \
+            --no-error-on-unmatched-pattern '**/*.{js,jsx,ts,tsx,json}')
+
           echo "$OUTPUT"
           echo "PRETTIER_OUTPUT<<EOF" >> $GITHUB_ENV
           echo "$OUTPUT" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
+
           if [ -n "$OUTPUT" ]; then
+            echo "❌ Prettier check failed. Please run prettier locally and commit the changes."
             exit 1
           fi
-
-      - name: Prettier Output
-        if: ${{ failure() }}
-        run: |
-          echo "The following files aren't formatted properly:"
-          echo "${PRETTIER_OUTPUT}"
