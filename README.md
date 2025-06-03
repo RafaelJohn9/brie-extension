@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ Capture screenshots, console errors, network issues, and  user actions,<br />giving developers full context instantly.</strong>
+  <strong>⚡️ Capture screenshots, console errors, network issues,  and  user actions,<br />giving developers full context instantly.</strong>
 </p>
 
 <br />
